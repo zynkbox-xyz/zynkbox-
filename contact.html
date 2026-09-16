@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Zynkbox</title>
+    <meta name="description" content="Get in touch with Zynkbox. We'd love to hear your feedback, collaborations, or culinary questions.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        :root {
+            --bg-color: #FAF9F6;
+            --surface-color: #FFFFFF;
+            --accent-color: #D4BFA1;
+            --text-primary: #2C2C2E;
+            --text-secondary: #636366;
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --border-radius-premium: 24px;
+            --shadow-soft: 0 10px 30px rgba(0,0,0,0.03);
+
+            /* Motion Tokens */
+            --ease-entrance: cubic-bezier(0.22, 1, 0.36, 1);
+            --ease-hover: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-subtle: cubic-bezier(0.3, 0, 0.7, 1);
+            --duration-fast: 200ms;
+            --duration-standard: 400ms;
+            --duration-slow: 700ms;
+
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -webkit-overflow-scrolling: touch;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, .serif { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(15px);
+            background: var(--glass-bg);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-primary);
+            letter-spacing: -1px;
+        }
+        .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color var(--duration-fast) var(--ease-hover);
+        }
+        .nav-links a:hover { color: var(--text-primary); }
+
+        .contact-container {
+            max-width: 1100px;
+            margin: 120px auto 80px;
+            padding: 0 5%;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 5rem;
+        }
+
+        .contact-info h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+        .contact-info p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+        .info-item {
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .info-item span {
+            font-weight: 600;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            width: 80px;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 3rem;
+            border-radius: var(--border-radius-premium);
+            box-shadow: var(--shadow-soft);
+        }
+        .form-group { margin-bottom: 2rem; }
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: background var(--duration-fast) var(--ease-hover), border-color var(--duration-fast) var(--ease-hover);
+            background: var(--bg-color);
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: white;
+        }
+        .submit-btn {
+            background: var(--text-primary);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background var(--duration-fast) var(--ease-hover), transform var(--duration-fast) var(--ease-hover);
+        }
+        .submit-btn:hover {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            background: white;
+            padding: 5rem 5% 2rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            margin-top: 80px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto 4rem;
+        }
+        .footer-brand .logo { display: block; margin-bottom: 1.5rem; }
+        .footer-brand p { color: var(--text-secondary); max-width: 300px; font-size: 0.9rem; }
+        .footer-links h4 { margin-bottom: 1.5rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 0.8rem; }
+        .footer-links a { text-decoration: none; color: var(--text-secondary); font-size: 0.9rem; transition: color var(--duration-fast) var(--ease-hover), padding-left var(--duration-fast) var(--ease-hover); }
+        .footer-links a:hover { color: var(--text-primary); padding-left: 5px; }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(0,0,0,0.05); color: var(--text-secondary); font-size: 0.8rem; }
+
+        @media (max-width: 992px) {
+            .contact-container { grid-template-columns: 1fr; gap: 3rem; }
+            .contact-info { text-align: center; }
+            .info-item { justify-content: center; }
+        }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+        }
+
+        [data-reveal="stagger"] {
+            opacity: 0;
+            transform: translateY(30px);
+            transition:
+                opacity var(--duration-standard) var(--ease-entrance),
+                transform var(--duration-standard) var(--ease-entrance);
+            transition-delay: calc(var(--reveal-index, 0) * 0.1s);
+            will-change: transform, opacity;
+        }
+        [data-reveal="stagger"].is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .motion-optimized {
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">Zynkbox</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#recipes">Recipes</a></li>
+            <li><a href="#">Our Philosophy</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="contact-container">
+        <div class="contact-info">
+            <h1 data-reveal="stagger" style="--reveal-index: 0">Let's <br>Connect.</h1>
+            <p data-reveal="stagger" style="--reveal-index: 1">Whether you have a question about a recipe, a collaboration proposal, or just want to say hello, we're always open to culinary conversations.</p>
+
+            <div class="info-item" data-reveal="stagger" style="--reveal-index: 2">
+                <span>Email</span>
+                <span>hello@zynkbox.xyz</span>
+            </div>
+            <div class="info-item" data-reveal="stagger" style="--reveal-index: 3">
+                <span>Studio</span>
+                <span>12 Culinary Ave, Gastronomy District, NY</span>
+            </div>
+            <div class="info-item" data-reveal="stagger" style="--reveal-index: 4">
+                <span>Press</span>
+                <span>press@zynkbox.xyz</span>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <form action="#">
+                <div class="form-group" data-reveal="stagger" style="--reveal-index: 5">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group" data-reveal="stagger" style="--reveal-index: 6">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="email@example.com" required>
+                </div>
+                <div class="form-group" data-reveal="stagger" style="--reveal-index: 7">
+                    <label>Message</label>
+                    <textarea rows="6" placeholder="Tell us what's on your mind..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn motion-optimized" data-reveal="stagger" style="--reveal-index: 8">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo">Zynkbox</a>
+                <p>Redefining the culinary experience through minimalist design and maximalist flavor.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="#">Seasonal</a></li>
+                    <li><a href="#">Gourmet</a></li>
+                    <li><a href="#">Quick Luxuries</a></li>
+                    <li><a href="#">Pastry Art</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">Philosophy</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Pinterest</a></li>
+                    <li><a href="#">YouTube</a></li>
+                    <li><a href="#">Newsletter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Zynkbox. All rights reserved. Designed for zynkbox.xyz
+        </div>
+    </footer>
+
+    <script>
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('[data-reveal="stagger"]').forEach(el => {
+            revealObserver.observe(el);
+        });
+    </script>
+</body>
+</html>

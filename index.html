@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zynkbox | Culinary Artistry & Gourmet Recipes</title>
+    <meta name="description" content="Explore an exquisite collection of gourmet recipes designed for the modern epicurean. Zynkbox blends minimalist aesthetics with maximalist flavor.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #FAF9F6;
+            --surface-color: #FFFFFF;
+            --accent-color: #D4BFA1;
+            --text-primary: #2C2C2E;
+            --text-secondary: #636366;
+            --glass-bg: rgba(255, 255, 255, 0.8);
+
+            /* Premium Motion Tokens */
+            --ease-entrance: cubic-bezier(0.22, 1, 0.36, 1);
+            --ease-hover: cubic-bezier(0.4, 0, 0.2, 1);
+            --ease-subtle: cubic-bezier(0.3, 0, 0.7, 1);
+            --duration-fast: 200ms;
+            --duration-standard: 400ms;
+            --duration-slow: 700ms;
+
+            --transition-smooth: all var(--duration-standard) var(--ease-entrance);
+            --border-radius-premium: 24px;
+            --shadow-soft: 0 10px 30px rgba(0,0,0,0.03);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* --- MOTION SYSTEM --- */
+        .motion-optimized {
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+
+        [data-reveal="stagger"] {
+            opacity: 0;
+            transform: translateY(30px);
+            transition:
+                opacity var(--duration-standard) var(--ease-entrance),
+                transform var(--duration-standard) var(--ease-entrance);
+            transition-delay: calc(var(--reveal-index, 0) * 0.1s);
+        }
+
+        [data-reveal="stagger"].is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1, h2, h3, .serif {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition-smooth);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            background: var(--glass-bg);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        nav.scrolled {
+            padding: 0.8rem 5%;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-primary);
+            letter-spacing: -1px;
+            z-index: 1100;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .nav-links a:hover { color: var(--text-primary); }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1100;
+            padding: 10px;
+        }
+
+        .hamburger {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        .hamburger::before, .hamburger::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: var(--transition-smooth);
+        }
+
+        .hamburger::before { top: -8px; }
+        .hamburger::after { bottom: -8px; }
+
+        .menu-open .hamburger { background: transparent; }
+        .menu-open .hamburger::before { transform: rotate(45deg); top: 0; }
+        .menu-open .hamburger::after { transform: rotate(-45deg); bottom: 0; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 120%; /* Extra height to prevent gaps during scroll */
+            z-index: -1;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://picsum.photos/id/102/1920/1080');
+            background-size: cover;
+            background-position: center;
+            will-change: transform;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 0 5%;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition-smooth);
+        }
+
+        .hero-content.visible { opacity: 1; transform: translateY(0); }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .cta {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: white;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: var(--transition-smooth);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .cta:hover { transform: scale(1.05); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
+
+        /* --- RECIPE GRID --- */
+        .recipe-section {
+            padding: 8rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header { text-align: center; margin-bottom: 5rem; }
+        .section-header h2 { font-size: clamp(2rem, 5vw, 3rem); margin-bottom: 1rem; }
+        .section-header p { color: var(--text-secondary); font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--surface-color);
+            border-radius: var(--border-radius-premium);
+            overflow: hidden;
+            transition: transform var(--duration-standard) var(--ease-hover), box-shadow var(--duration-standard) var(--ease-hover);
+            box-shadow: var(--shadow-soft);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+
+        .card-img { width: 100%; height: 250px; overflow: hidden; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+        .card:hover .card-img img { transform: scale(1.1); }
+
+        .card-content { padding: 1.5rem; }
+        .card-category { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-color); font-weight: 600; margin-bottom: 0.5rem; display: block; }
+        .card-title { font-size: 1.3rem; margin-bottom: 1rem; line-height: 1.2; }
+        .card-desc { color: var(--text-secondary); font-size: 0.9rem; font-weight: 300; }
+
+        /* --- FOOTER --- */
+        footer { background: white; padding: 5rem 5% 2rem; border-top: 1px solid rgba(0,0,0,0.05); }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto 4rem;
+        }
+        .footer-brand .logo { display: block; margin-bottom: 1.5rem; }
+        .footer-brand p { color: var(--text-secondary); max-width: 300px; font-size: 0.9rem; }
+        .footer-links h4 { margin-bottom: 1.5rem; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 0.8rem; }
+        .footer-links a { text-decoration: none; color: var(--text-secondary); font-size: 0.9rem; transition: var(--transition-smooth); }
+        .footer-links a:hover { color: var(--text-primary); padding-left: 5px; }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid rgba(0,0,0,0.05); color: var(--text-secondary); font-size: 0.8rem; }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: var(--surface-color);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+                z-index: 1050;
+            }
+            .nav-links.active { right: 0; }
+            .grid { gap: 1.5rem; }
+            .recipe-section { padding: 5rem 5%; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="main-nav">
+        <a href="index.html" class="logo">Zynkbox</a>
+        <button class="menu-toggle" id="menu-toggle">
+            <span class="hamburger"></span>
+        </button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#recipes">Recipes</a></li>
+            <li><a href="#about">Our Philosophy</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-bg" id="hero-bg"></div>
+        <div class="hero-content motion-optimized" id="hero-content">
+            <h1>The Art of <br><span class="serif" style="font-style: italic;">Modern Gastronomy</span></h1>
+            <p>Curating the world's most exquisite flavors through a minimalist lens.</p>
+            <a href="#recipes" class="cta">Explore Recipes</a>
+        </div>
+    </section>
+
+    <section class="recipe-section" id="recipes">
+        <div class="section-header">
+            <h2>Curated Collections</h2>
+            <p>A symphony of taste and texture, crafted for those who seek perfection in every bite.</p>
+        </div>
+        <div class="grid" id="recipe-grid"></div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo">Zynkbox</a>
+                <p>Redefining the culinary experience through minimalist design and maximalist flavor.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Explore</h4>
+                <ul>
+                    <li><a href="#">Seasonal</a></li>
+                    <li><a href="#">Gourmet</a></li>
+                    <li><a href="#">Quick Luxuries</a></li>
+                    <li><a href="#">Pastry Art</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">Philosophy</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Pinterest</a></li>
+                    <li><a href="#">YouTube</a></li>
+                    <li><a href="#">Newsletter</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 Zynkbox. All rights reserved. Designed for zynkbox.xyz
+        </div>
+    </footer>
+
+    <script>
+        const recipes = [
+            { title: "Truffle-Infused Wild Mushroom Risotto", slug: "truffle-mushroom-risotto", category: "Mains", desc: "A creamy, earthy symphony featuring hand-picked forest mushrooms and black truffle oil.", img: "risotto" },
+            { title: "Saffron-Poached Pear with Honey Foam", slug: "saffron-poached-pear", category: "Desserts", desc: "A delicate balance of floral saffron and airy honey, creating a visual and taste masterpiece.", img: "poached-pear" },
+            { title: "Miso-Glazed Black Cod with Bok Choy", slug: "miso-black-cod", category: "Mains", desc: "Buttery black cod marinated in sweet white miso, served with crisp baby bok choy.", img: "black-cod" },
+            { title: "Deconstructed Lemon Tart with Basil", slug: "deconstructed-lemon-tart", category: "Desserts", desc: "A modern take on a classic, featuring tart lemon curd, buttery crumble, and fresh basil oil.", img: "lemon-tart" },
+            { title: "Heritage Tomato Carpaccio with Burrata", slug: "tomato-burrata-carpaccio", category: "Starters", desc: "Slices of heirloom tomatoes paired with creamy Burrata and a drizzle of 25-year aged balsamic.", img: "tomato-burrata" },
+            { title: "Wagyu Beef Tataki with Ponzu", slug: "wagyu-beef-tataki", category: "Starters", desc: "Lightly seared A5 Wagyu, sliced thin and served with a zesty citrus ponzu and micro-greens.", img: "wagyu-beef" },
+            { title: "Lavender-Honey Roasted Quail", slug: "lavender-honey-quail", category: "Mains", desc: "Young quail glazed with local lavender honey and roasted to a perfect golden brown.", img: "roasted-quail" },
+            { title: "Matcha-Infused White Chocolate Mousse", slug: "matcha-white-chocolate-mousse", category: "Desserts", desc: "A velvety blend of premium ceremonial grade matcha and creamy white chocolate.", img: "matcha-mousse" },
+            { title: "Compressed Watermelon with Feta & Mint", slug: "compressed-watermelon-feta", category: "Starters", desc: "Vacuum-compressed watermelon for intense flavor, paired with salty feta and fresh mint.", img: "watermelon-feta" },
+            { title: "Scallops with Cauliflower Puree & Caper", slug: "seared-scallops-cauliflower", category: "Mains", desc: "Pan-seared U10 scallops on a bed of silky cauliflower puree with a salty caper emulsion.", img: "scallops" },
+            { title: "Dark Chocolate Soufflé with Raspberry", slug: "chocolate-raspberry-souffle", category: "Desserts", desc: "An airy, intense chocolate experience paired with a tart raspberry reduction.", img: "chocolate-souffle" },
+            { title: "Lobster Thermidor with Gruyère Crust", slug: "lobster-thermidor", category: "Mains", desc: "Succulent lobster in a rich cream sauce, topped with melted Gruyère and broiled.", img: "lobster-thermidor" },
+            { title: "Roasted Beetroot with Goat Cheese Foam", slug: "roasted-beetroot-goatcheese", category: "Starters", desc: "Earthiness of slow-roasted beets complemented by a light, tangy goat cheese foam.", img: "beetroot-goatcheese" },
+            { title: "Vanilla Bean Panna Cotta with Fig", slug: "vanilla-panna-cotta-fig", category: "Desserts", desc: "Smooth vanilla bean cream topped with caramelized figs and a drizzle of maple.", img: "panna-cotta" },
+            { title: "Wild Salmon with Asparagus & Beurre Blanc", slug: "wild-salmon-beurre-blanc", category: "Mains", desc: "Crispy-skinned salmon served with tender asparagus and a classic white butter sauce.", img: "salmon-beurre-blanc" },
+            { title: "Tuna Tartare with Avocado Mousse", slug: "tuna-tartare-avocado", category: "Starters", desc: "Sashimi-grade tuna finely diced with lime and ginger, paired with smooth avocado.", img: "tuna-tartare" },
+            { title: "Apple Tarte Tatin with Calvados", slug: "apple-tarte-tatin", category: "Desserts", desc: "Caramelized apples on a buttery pastry, finished with a splash of Calvados.", img: "tarte-tatin" },
+            { title: "Duck Confit with Cherry Gastrique", slug: "duck-confit-cherry", category: "Mains", desc: "Slow-cooked duck leg with a sweet and tangy cherry reduction for balance.", img: "duck-confit" },
+            { title: "Burnt Garlic & Parmesan Potato Puree", slug: "garlic-parmesan-puree", category: "Sides", desc: "The ultimate side dish: buttery potatoes whipped with roasted garlic and aged Parmesan.", img: "potato-puree" },
+            { title: "Passion Fruit Pavlova with Mango", slug: "passion-fruit-pavlova", category: "Desserts", desc: "A crisp meringue shell filled with tangy passion fruit and fresh mango cubes.", img: "pavlova" },
+            { title: "Chilean Sea Bass with Lemon Caper", slug: "sea-bass-lemon-caper", category: "Mains", desc: "Flaky sea bass fillet pan-roasted with a vibrant lemon-caper emulsion.", img: "sea-bass" },
+            { title: "Cold Cucumber Soup with Dill Oil", slug: "cucumber-soup-dill", category: "Starters", desc: "A refreshing summer starter with chilled cucumbers, yogurt, and bright green dill oil.", img: "cucumber-soup" },
+            { title: "Pear & Gorgonzola Tart with Honey", slug: "pear-gorgonzola-tart", category: "Starters", desc: "A sophisticated savory-sweet tart featuring ripe pears and pungent Gorgonzola.", img: "pear-tart" },
+            { title: "Roasted Veal with Morels & Thyme", slug: "roasted-veal-morels", category: "Mains", desc: "Tender veal medallions served with sautéed morel mushrooms and fresh thyme.", img: "veal-morels" },
+            { title: "Espresso-Infused Chocolate Cake", slug: "espresso-chocolate-cake", category: "Desserts", desc: "Deep, dark cocoa layers infused with a shot of intense espresso.", img: "chocolate-cake" },
+            { title: "Grilled Octopus with Romesco Sauce", slug: "grilled-octopus-romesco", category: "Starters", desc: "Tender grilled octopus paired with a bold, nutty Spanish Romesco sauce.", img: "grilled-octopus" },
+            { title: "Lobster Ravioli with Saffron Cream", slug: "lobster-ravioli-saffron", category: "Mains", desc: "Handmade pasta filled with lobster, bathed in a luxurious saffron-infused cream.", img: "lobster-ravioli" },
+            { title: "Fig & Prosciutto Salad with Arugula", slug: "fig-prosciutto-salad", category: "Starters", desc: "Fresh figs and salty prosciutto over peppery arugula with a honey-lemon vinaigrette.", img: "fig-salad" },
+            { title: "Almond Flour Cake with Raspberry Jam", slug: "almond-cake-raspberry", category: "Desserts", desc: "A gluten-free masterpiece made with almond meal and topped with tart raspberry.", img: "almond-cake" },
+            { title: "Braised Short Ribs with Parsnip Puree", slug: "braised-short-ribs", category: "Mains", desc: "Slow-braised beef short ribs in a red wine reduction over silky parsnip puree.", img: "short-ribs" },
+        ];
+
+        const grid = document.getElementById('recipe-grid');
+        recipes.forEach((recipe, index) => {
+            const card = document.createElement('a');
+            card.className = 'card motion-optimized';
+            card.setAttribute('data-reveal', 'stagger');
+            card.style.setProperty('--reveal-index', index);
+            card.href = `recipe-detail.html?slug=${recipe.slug}`;
+            const imageUrl = `https://loremflickr.com/800/600/food,${recipe.img}/all`;
+            card.innerHTML = `
+                <div class="card-img">
+                    <img src="${imageUrl}" alt="${recipe.title}" loading="lazy">
+                </div>
+                <div class="card-content">
+                    <span class="card-category">${recipe.category}</span>
+                    <h3 class="card-title">${recipe.title}</h3>
+                    <p class="card-desc">${recipe.desc}</p>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Mobile Menu Logic
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            document.body.classList.toggle('menu-open');
+            navLinks.classList.toggle('active');
+        });
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroBg = document.getElementById('hero-bg');
+            const nav = document.getElementById('main-nav');
+
+            // Dampened parallax: move the background at 20% of the scroll speed
+            const offset = scrolled * 0.2;
+
+            requestAnimationFrame(() => {
+                heroBg.style.transform = `translate3d(0, ${offset}px, 0)`;
+            });
+
+            if (scrolled > 50) { nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); }
+        });
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.getElementById('hero-content').classList.add('visible');
+        document.querySelectorAll('[data-reveal="stagger"]').forEach(el => revealObserver.observe(el));
+    </script>
+</body>
+</html>
